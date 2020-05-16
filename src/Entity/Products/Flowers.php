@@ -1,31 +1,34 @@
 <?php
 
-namespace App\Entity;
+namespace App\Entity\Products;
 
+use App\Entity\Interfaces\OrderStrategyInterface;
 use App\Repository\FlowersRepository;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
  * @ORM\Entity(repositoryClass=FlowersRepository::class)
  */
-class Flowers
+class Flowers implements OrderStrategyInterface
 {
+	private const TYPE ="flowers";
+
     /**
      * @ORM\Id()
      * @ORM\GeneratedValue()
      * @ORM\Column(type="integer")
      */
-    private $id;
+    private int $id;
 
     /**
      * @ORM\Column(type="string", length=60)
      */
-    private $name;
+    private string $name;
 
     /**
      * @ORM\Column(type="array")
      */
-    private $address = [];
+    private array $address = [];
 
     /**
      * @ORM\Column(type="datetime")
@@ -72,4 +75,14 @@ class Flowers
 
         return $this;
     }
+
+	public function isOrderable(string $orderType): bool
+	{
+		return self::TYPE === $orderType;
+	}
+
+	public function sendOrder(): void
+	{
+		// TODO: Implement sendOrder() method.
+	}
 }

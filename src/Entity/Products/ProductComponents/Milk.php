@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Entity;
+namespace App\Entity\Products\ProductComponents;
 
 use App\Repository\MilkRepository;
 use Doctrine\ORM\Mapping as ORM;
@@ -15,12 +15,12 @@ class Milk
      * @ORM\GeneratedValue()
      * @ORM\Column(type="integer")
      */
-    private $id;
+    private int $id;
 
     /**
      * @ORM\Column(type="string", length=255)
      */
-    private $name;
+    private string $name;
 
     public function getId(): ?int
     {

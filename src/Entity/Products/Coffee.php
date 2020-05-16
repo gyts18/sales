@@ -1,31 +1,35 @@
 <?php
 
-namespace App\Entity;
+namespace App\Entity\Products;
 
+use App\Entity\Interfaces\OrderStrategyInterface;
+use App\Entity\Products\ProductComponents\Milk;
 use App\Repository\CoffeeRepository;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
  * @ORM\Entity(repositoryClass=CoffeeRepository::class)
  */
-class Coffee
+class Coffee implements OrderStrategyInterface
 {
+	private const KEY = "coffee";
+
     /**
      * @ORM\Id()
      * @ORM\GeneratedValue()
      * @ORM\Column(type="integer")
      */
-    private $id;
+    private int $id;
 
     /**
      * @ORM\Column(type="boolean")
      */
-    private $milk;
+    private bool $milk;
 
     /**
      * @ORM\ManyToOne(targetEntity=Milk::class)
      */
-    private $milkType;
+    private Milk $milkType;
 
     /**
      * @ORM\Column(type="array")
@@ -54,7 +58,7 @@ class Coffee
         return $this->milkType;
     }
 
-    public function setMilkType(?Milk $milkType): self
+    public function setMilkType(Milk $milkType): self
     {
         $this->milkType = $milkType;
 
@@ -72,4 +76,14 @@ class Coffee
 
         return $this;
     }
+
+	public function isOrderable(string $orderType): bool
+	{
+		return $orderType === SELF::KEY;
+	}
+
+	public function sendOrder(): void
+	{
+		// TODO: Implement sendOrder() method.
+	}
 }

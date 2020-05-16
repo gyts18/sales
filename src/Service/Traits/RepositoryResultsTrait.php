@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Services\Traits;
+namespace App\Service\Traits;
 
 use Doctrine\ORM\QueryBuilder;
 
