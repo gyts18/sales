@@ -23,5 +23,22 @@ services:
         resource: '../src/Controller'
         tags: ['controller.service_arguments']
 
+    App\Service\:
+        public: true
+        resource: '../src/Service/*'
+        exclude: '../src/Service/{DependencyInjection,Entity,Migrations,Tests,Kernel.php}'
+
+    App\Factories\:
+        public: true
+        resource: '../src/Factories/*'
+
+    App\Entity\Products\Flowers:
+        tags: ['order_type']
+
+    App\Entity\Products\Coffee:
+        tags: ['order_type']
+
+    App\Entity\Order:
+
     # add more service definitions when explicit configuration is needed
     # please note that last definitions always *replace* previous ones
