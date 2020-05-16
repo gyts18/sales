@@ -15,21 +15,31 @@ class Order
 {
 	use WithCreatedAt;
 
-    /**
-     * @ORM\Id()
-     * @ORM\GeneratedValue()
-     * @ORM\Column(type="integer")
-     */
-    private int $id;
+	/**
+	 * @ORM\Id()
+	 * @ORM\GeneratedValue()
+	 * @ORM\Column(type="integer")
+	 */
+	private int $id;
 	private array $strategies = [];
 
-    public function addStrategy(OrderStrategyInterface $orderStrategy): void
+	public function addStrategy(OrderStrategyInterface $orderStrategy): void
 	{
 		$this->strategies[] = $orderStrategy;
 	}
 
-    public function getId(): int
-    {
-        return $this->id;
-    }
+	public function handleOrder($orderObject)
+	{
+		foreach ($this->strategies as $strategy) {
+			if ($strategy->isOrderable('coffee')) {
+				return $strategy->sendOrder($orderObject);
+			}
+		}
+		throw new \InvalidArgumentException('This type of order is not orderable');
+	}
+
+	public function getId(): int
+	{
+		return $this->id;
+	}
 }
