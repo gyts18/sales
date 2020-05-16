@@ -23,5 +23,14 @@ services:
         resource: '../src/Controller'
         tags: ['controller.service_arguments']
 
+    App\Services\:
+        public: true
+        resource: '../src/Services/*'
+        exclude: '../src/Service/{DependencyInjection,Entity,Migrations,Tests,Kernel.php}'
+
+    App\Factories\:
+        public: true
+        resource: '../src/Factories/*'
+
     # add more service definitions when explicit configuration is needed
     # please note that last definitions always *replace* previous ones
