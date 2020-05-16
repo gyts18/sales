@@ -3,6 +3,7 @@
 namespace App\Entity\Products;
 
 use App\Entity\Interfaces\OrderStrategyInterface;
+use App\Entity\Products\ProductComponents\CupSize;
 use App\Entity\Products\ProductComponents\Milk;
 use App\Repository\CoffeeRepository;
 use Doctrine\ORM\Mapping as ORM;
@@ -35,6 +36,12 @@ class Coffee implements OrderStrategyInterface
      * @ORM\Column(type="array")
      */
     private $location = [];
+
+    /**
+     * @ORM\ManyToOne(targetEntity=CupSize::class)
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $cupSize;
 
     public function getId(): ?int
     {
@@ -78,12 +85,24 @@ class Coffee implements OrderStrategyInterface
     }
 
 	public function isOrderable(string $orderType): bool
-	{
-		return $orderType === SELF::KEY;
-	}
+            	{
+            		return $orderType === SELF::KEY;
+            	}
 
 	public function sendOrder(): void
-	{
-		// TODO: Implement sendOrder() method.
-	}
+            	{
+            		// TODO: Implement sendOrder() method.
+            	}
+
+    public function getCupSize(): ?CupSize
+    {
+        return $this->cupSize;
+    }
+
+    public function setCupSize(?CupSize $cupSize): self
+    {
+        $this->cupSize = $cupSize;
+
+        return $this;
+    }
 }
