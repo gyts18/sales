@@ -1,13 +1,19 @@
 const $ = require('jquery');
 require('bootstrap');
+// initialize urls
 let urlCoffee = null;
 let urlFlowers = null;
 let urlOrders = null;
+//
+
+// Get urls from preassigned html
 document.addEventListener('DOMContentLoaded', () => {
     urlCoffee = $('#coffee').data('url');
     urlFlowers = $('#flowers').data('url');
     urlOrders = $('#orders').data('url');
 });
+
+// Event listeners to clear and update views.
 $(document).ready(function () {
     $('[data-toggle="popover"]').popover();
     $('#dynamicDiv').hide();
@@ -20,6 +26,8 @@ $(document).ready(function () {
     $('#orders').click(() => {
         clearViewAndInsertForm(urlOrders)
     });
+
+    //Dynamic generated attributes, cannot be checked with generic jQuery functions
     $('#dynamicDiv').on('click', 'input.form-check-input', () => {
         if ($("#coffee_form_milkType").is(':visible')) {
             $("[for=coffee_form_milkType]").fadeOut()
@@ -47,7 +55,7 @@ $(document).ready(function () {
         modal.modal('show');
     }
 });
-
+//Clear view and insert other contents
 function clearViewAndInsertForm(url) {
     $('#viewDiv').slideUp("slow", () => {
         $.getJSON(url, (data) => {
