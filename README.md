@@ -60,7 +60,7 @@ In that case I would have used Models, with assertions and done a custom form va
  - launch **yarn install**
  - launch **sf doctrine:database:create** (if exists continue to next step)
  - launch **sf doctrine:schema:create** (if exists continue to next step)
- - launch **sf doctrine:schema:create --force**  
+ - launch **sf doctrine:schema:update --force**  
  - launch **sf doctrine:fixtures:load -n** (for adding basic entities and a user account).
  - launch yarn encore dev
 
