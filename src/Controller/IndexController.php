@@ -4,9 +4,17 @@ namespace App\Controller;
 
 use App\Entity\Order;
 use App\Entity\Products\Coffee;
+use App\Form\CoffeeFormType;
+use App\Form\FlowerFormType;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 
+/**
+ * Class IndexController
+ * @Route("/home")
+ * @package App\Controller
+ */
 class IndexController extends AbstractController
 {
 	private Order $order;
@@ -17,9 +25,9 @@ class IndexController extends AbstractController
 	}
 
 	/**
-     * @Route("/home", name="home")
+     * @Route("/", name="home")
      */
-    public function index()
+    public function index(Request $request)
     {
         return $this->render('index/index.html.twig', [
             'controller_name' => 'IndexController',
