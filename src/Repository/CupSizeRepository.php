@@ -2,7 +2,7 @@
 
 namespace App\Repository;
 
-use App\Entity\CupSize;
+use App\Entity\Products\ProductComponents\CupSize;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 

@@ -1,0 +1,5 @@
+{% use 'bootstrap_4_layout.html.twig' %}
+{#{{ dump(form) }}#}
+{{ form_start(form, {'action': path('parse_coffee_form'), 'method': 'POST'}) }}
+{{ form_widget(form) }}
+{{ form_end(form) }}

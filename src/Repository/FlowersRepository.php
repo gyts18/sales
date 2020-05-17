@@ -2,7 +2,7 @@
 
 namespace App\Repository;
 
-use App\Entity\Flowers;
+use App\Entity\Products\Flowers;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 

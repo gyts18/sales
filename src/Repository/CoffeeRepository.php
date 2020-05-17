@@ -2,7 +2,7 @@
 
 namespace App\Repository;
 
-use App\Entity\Coffee;
+use App\Entity\Products\Coffee;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 

@@ -30,7 +30,7 @@ class Coffee implements OrderStrategyInterface
     /**
      * @ORM\ManyToOne(targetEntity=Milk::class)
      */
-    private Milk $milkType;
+    private ?Milk $milkType = null;
 
     /**
      * @ORM\Column(type="array")
