@@ -12,7 +12,10 @@ use Symfony\Component\DependencyInjection\Reference;
 
 class OrderCompilerPass implements CompilerPassInterface
 {
-
+    /**
+     * @param ContainerBuilder $container
+     * Added strategy to insert existing strategies form services.yaml
+     */
     public function process(ContainerBuilder $container)
     {
         $resolverService = $container->findDefinition(Order::class);

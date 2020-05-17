@@ -10,6 +10,7 @@ use App\Factories\CoffeeFactory;
 use App\Service\Serializer\SerializerService;
 use App\Service\Traits\RepositoryResultsTrait;
 use Doctrine\ORM\EntityManagerInterface;
+use Exception;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\Form\FormInterface;
 
@@ -31,6 +32,17 @@ class CoffeeService extends BaseService
         $this->serializerService = $serializerService;
     }
 
+    /**
+     * @param Order  $order
+     * @param Coffee $coffee
+     * @param string $type
+     * @param string $sendType
+     *
+     * @return mixed
+     * @throws Exception
+     *
+     * Called from controller to create an entity, and later to handle the order.
+     */
     public function createCoffeeAndDispatchOrder(Order $order, Coffee $coffee, string $type, string $sendType)
     {
         $coffee = $this->coffeeFactory->create($order, $coffee);

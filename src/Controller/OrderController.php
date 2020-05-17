@@ -24,6 +24,9 @@ class OrderController extends AbstractController
      * @param OrderService $orderService
      *
      * @return Response
+     *
+     * Renders the orders so the table gets viewed.
+     *
      */
     public function index(OrderService $orderService)
     {

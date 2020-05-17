@@ -6,19 +6,14 @@
 parameters:
 
 services:
-    # default configuration for services in *this* file
     _defaults:
         autowire: true      # Automatically injects dependencies in your services.
         autoconfigure: true # Automatically registers your services as commands, event subscribers, etc.
 
-    # makes classes in src/ available to be used as services
-    # this creates a service per class whose id is the fully-qualified class name
     App\:
         resource: '../src/*'
         exclude: '../src/{DependencyInjection,Entity,Migrations,Tests,Kernel.php}'
 
-    # controllers are imported separately to make sure services can be injected
-    # as action arguments even if you don't extend any base controller class
     App\Controller\:
         resource: '../src/Controller'
         tags: ['controller.service_arguments']
@@ -31,7 +26,7 @@ services:
     App\Factories\:
         public: true
         resource: '../src/Factories/*'
-
+#    Strategy adding
     App\Entity\Products\Flowers:
         tags: ['order_type']
 
@@ -39,6 +34,5 @@ services:
         tags: ['order_type']
 
     App\Entity\Order:
+#  end
 
-    # add more service definitions when explicit configuration is needed
-    # please note that last definitions always *replace* previous ones

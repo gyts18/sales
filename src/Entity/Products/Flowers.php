@@ -7,6 +7,7 @@ use App\Entity\Order;
 use App\Repository\FlowersRepository;
 use App\Service\Serializer\SerializerService;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Serializer\Exception\ExceptionInterface;
 
 /**
  * @ORM\Entity(repositoryClass=FlowersRepository::class)
@@ -83,11 +84,29 @@ class Flowers implements OrderStrategyInterface
         return $this;
     }
 
+    /**
+     * @param string $orderType
+     *
+     * @return bool
+     *
+     * STRATEGY PATTERN, check if entity is orderable
+     */
     public function isOrderable(string $orderType): bool
     {
         return self::TYPE === $orderType;
     }
 
+    /**
+     * @param object            $flowers
+     * @param string            $sendType
+     * @param SerializerService $serializerService
+     *
+     * @return array|bool|float|int|mixed|string
+     * @throws ExceptionInterface
+     *
+     * STRATEGY PATTERN, after is isOrderable() is true, handle the sending logic
+     * on which format to send (json or xml) and to serialize accordingly.
+     */
     public function sendOrder(object $flowers, string $sendType, SerializerService $serializerService)
     {
         if ($sendType == 'JSON') {

@@ -13,6 +13,12 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class FlowerFormType extends AbstractType
 {
+    /**
+     * @param FormBuilderInterface $builder
+     * @param array                $options
+     *
+     * Form for building Flowers entity, with form validation in the frontend.
+     */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder

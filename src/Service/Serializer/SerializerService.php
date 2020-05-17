@@ -11,10 +11,15 @@ use Symfony\Component\Serializer\Exception\ExceptionInterface;
 use Symfony\Component\Serializer\Normalizer\ObjectNormalizer;
 use Symfony\Component\Serializer\Serializer;
 
+/**
+ * Class SerializerService
+ *
+ * @package App\Service\Serializer
+ * Serializer, to serialize objects to either XML or JSON
+ */
 class SerializerService
 {
-
-    private array $encoders = [];
+    private array $jsonEncoder = [];
     private array $xmlEncoder = [];
     private array $normalizers = [];
 
@@ -52,6 +57,12 @@ class SerializerService
         );
     }
 
+    /**
+     * @param       $entity
+     * @param array $excludeProperties
+     *
+     * @return string
+     */
     public function serializeWithRelationsToXml($entity, array $excludeProperties = [])
     {
         $serializer = new Serializer($this->normalizers, $this->xmlEncoder);

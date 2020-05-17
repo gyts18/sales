@@ -10,6 +10,13 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * @ORM\Entity(repositoryClass=OrderRepository::class)
  * @ORM\Table(name="`order`")
+ *
+ *
+ * STRATEGY PATTERN
+ * well at first trying out the strategy pattern, didin't get the full usage of it
+ * (ofcourse it came to sense after some time), and I created an entity rather than
+ * a service. But with a couple of workarounds got it to work even under entity usage
+ * can't really say if this a good practise to do.
  */
 class Order
 {
