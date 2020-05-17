@@ -3,6 +3,7 @@
 namespace App\Entity\Products;
 
 use App\Entity\Interfaces\OrderStrategyInterface;
+use App\Entity\Order;
 use App\Repository\FlowersRepository;
 use Doctrine\ORM\Mapping as ORM;
 
@@ -11,7 +12,7 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class Flowers implements OrderStrategyInterface
 {
-	private const TYPE ="flowers";
+    private const TYPE = "flowers";
 
     /**
      * @ORM\Id()
@@ -23,7 +24,7 @@ class Flowers implements OrderStrategyInterface
     /**
      * @ORM\Column(type="string", length=60)
      */
-    private string $name;
+    private ?string $name = null;
 
     /**
      * @ORM\Column(type="array")
@@ -34,6 +35,11 @@ class Flowers implements OrderStrategyInterface
      * @ORM\Column(type="datetime")
      */
     private $deliver_on;
+
+    /**
+     * @ORM\OneToOne(targetEntity=Order::class, cascade={"persist", "remove"})
+     */
+    private $orderEntity;
 
     public function getId(): ?int
     {
@@ -76,13 +82,25 @@ class Flowers implements OrderStrategyInterface
         return $this;
     }
 
-	public function isOrderable(string $orderType): bool
-	{
-		return self::TYPE === $orderType;
-	}
+    public function isOrderable(string $orderType): bool
+    {
+        return self::TYPE === $orderType;
+    }
 
-	public function sendOrder(): void
-	{
-		// TODO: Implement sendOrder() method.
-	}
+    public function sendOrder(): void
+    {
+        // TODO: Implement sendOrder() method.
+    }
+
+    public function getOrderEntity(): ?Order
+    {
+        return $this->orderEntity;
+    }
+
+    public function setOrderEntity(?Order $orderEntity): self
+    {
+        $this->orderEntity = $orderEntity;
+
+        return $this;
+    }
 }

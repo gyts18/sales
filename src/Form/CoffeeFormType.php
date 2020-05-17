@@ -20,26 +20,38 @@ class CoffeeFormType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('milk', CheckboxType::class,[
-                'label' => 'Milk?',
-                'empty_data'=>0,
-                'required'=>false
-            ])
+            ->add(
+                'milk',
+                CheckboxType::class,
+                [
+                    'label' => 'Milk?',
+                    'empty_data' => 0,
+                    'required' => false,
+                ]
+            )
             ->add(
                 'milkType',
                 EntityType::class,
                 [
                     'class' => Milk::class,
-                    'empty_data'=>null
+                    'empty_data' => null,
                 ]
             )
             ->add('cupSize')
-            ->add('Longitude', TextType::class, [
-                'property_path'=> 'location[0]'
-            ])
-            ->add('Latitude', TextType::class, [
-                'property_path'=> 'location[1]'
-            ])
+            ->add(
+                'Longitude',
+                TextType::class,
+                [
+                    'property_path' => 'location[0]',
+                ]
+            )
+            ->add(
+                'Latitude',
+                TextType::class,
+                [
+                    'property_path' => 'location[1]',
+                ]
+            )
             ->add(
                 'sendJSON',
                 SubmitType::class,

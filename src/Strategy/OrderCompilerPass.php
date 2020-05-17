@@ -13,12 +13,12 @@ use Symfony\Component\DependencyInjection\Reference;
 class OrderCompilerPass implements CompilerPassInterface
 {
 
-	public function process(ContainerBuilder $container)
-	{
-		$resolverService = $container->findDefinition(Order::class);
-		$strategyServices = array_keys($container->findTaggedServiceIds(OrderStrategyInterface::SERVICE_TAG));
-		foreach ($strategyServices as $strategyService) {
-			$resolverService->addMethodCall('addStrategy', [new Reference($strategyService)]);
-		}
-	}
+    public function process(ContainerBuilder $container)
+    {
+        $resolverService = $container->findDefinition(Order::class);
+        $strategyServices = array_keys($container->findTaggedServiceIds(OrderStrategyInterface::SERVICE_TAG));
+        foreach ($strategyServices as $strategyService) {
+            $resolverService->addMethodCall('addStrategy', [new Reference($strategyService)]);
+        }
+    }
 }

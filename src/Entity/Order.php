@@ -33,15 +33,20 @@ class Order
      */
     private $orderAccepted = false;
 
+    /**
+     * @ORM\Column(type="datetime")
+     */
+    private $deliver_at;
+
     public function addStrategy(OrderStrategyInterface $orderStrategy): void
     {
         $this->strategies[] = $orderStrategy;
     }
 
-    public function handleOrder($orderObject)
+    public function handleOrder($orderObject, $type)
     {
         foreach ($this->strategies as $strategy) {
-            if ($strategy->isOrderable('coffee')) {
+            if ($strategy->isOrderable($type)) {
                 return $strategy->sendOrder($orderObject);
             }
         }
@@ -76,4 +81,17 @@ class Order
 
         return $this;
     }
+
+    public function getDeliverAt(): ?\DateTimeInterface
+    {
+        return $this->deliver_at;
+    }
+
+    public function setDeliverAt(\DateTimeInterface $deliver_at): self
+    {
+        $this->deliver_at = $deliver_at;
+
+        return $this;
+    }
+
 }
