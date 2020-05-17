@@ -5,6 +5,7 @@ namespace App\Entity\Products;
 use App\Entity\Interfaces\OrderStrategyInterface;
 use App\Entity\Order;
 use App\Repository\FlowersRepository;
+use App\Service\Serializer\SerializerService;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -27,7 +28,7 @@ class Flowers implements OrderStrategyInterface
     private ?string $name = null;
 
     /**
-     * @ORM\Column(type="array")
+     * @ORM\Column(type="simple_array")
      */
     private array $address = [];
 
@@ -87,9 +88,19 @@ class Flowers implements OrderStrategyInterface
         return self::TYPE === $orderType;
     }
 
-    public function sendOrder(): void
+    public function sendOrder(object $flowers, string $sendType, SerializerService $serializerService)
     {
-        // TODO: Implement sendOrder() method.
+        if ($sendType == 'JSON') {
+            $sendableData = $this->handleData($flowers);
+
+            return $serializerService->serializeWithRelationsToJson($sendableData);
+        } elseif ($sendType == 'XML') {
+            $sendableData = $this->handleData($flowers);
+
+            return $serializerService->serializeWithRelationsToXml($sendableData);
+        } else {
+            return false;
+        }
     }
 
     public function getOrderEntity(): ?Order
@@ -102,5 +113,15 @@ class Flowers implements OrderStrategyInterface
         $this->orderEntity = $orderEntity;
 
         return $this;
+    }
+
+    private function handleData(Flowers $flowers)
+    {
+        return [
+            'orderId' => $flowers->getOrderEntity()->getId(),
+            'delivery_place ' => implode(', ', $flowers->getAddress()),
+            'name' => $flowers->getOrderEntity()->getProductName(),
+            'deliver_at' => $flowers->getDeliverOn()->format('Y-m-d H:m:s'),
+        ];
     }
 }

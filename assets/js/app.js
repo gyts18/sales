@@ -2,9 +2,11 @@ const $ = require('jquery');
 require('bootstrap');
 let urlCoffee = null;
 let urlFlowers = null;
+let urlOrders = null;
 document.addEventListener('DOMContentLoaded', () => {
     urlCoffee = $('#coffee').data('url');
     urlFlowers = $('#flowers').data('url');
+    urlOrders = $('#orders').data('url');
 });
 $(document).ready(function () {
     $('[data-toggle="popover"]').popover();
@@ -15,7 +17,9 @@ $(document).ready(function () {
     $('#coffee').click(() => {
         clearViewAndInsertForm(urlCoffee)
     });
-
+    $('#orders').click(() => {
+        clearViewAndInsertForm(urlOrders)
+    });
     $('#dynamicDiv').on('click', 'input.form-check-input', () => {
         if ($("#coffee_form_milkType").is(':visible')) {
             $("[for=coffee_form_milkType]").fadeOut()
@@ -37,6 +41,11 @@ $(document).ready(function () {
         });
         $('#backButton').fadeOut();
     })
+
+    let modal = $('.modal');
+    if (modal.length) {
+        modal.modal('show');
+    }
 });
 
 function clearViewAndInsertForm(url) {

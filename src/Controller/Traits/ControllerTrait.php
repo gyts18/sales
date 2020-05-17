@@ -3,17 +3,13 @@
 
 namespace App\Controller\Traits;
 
-use App\Entity\BigCakeCustomer;
-use App\Entity\Match;
-use App\Factories\MessageFactory;
-use App\Service\AdditionalTranslationService;
-use App\Service\ConversationService;
 use Doctrine\Common\Inflector\Inflector;
 use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Validator\ConstraintViolation;
 use Symfony\Component\Validator\ConstraintViolationListInterface;
 
-trait RestControllerTrait
+trait ControllerTrait
 {
 
     /**
@@ -49,5 +45,10 @@ trait RestControllerTrait
                 'errors' => $errors,
             ], $status
         );
+    }
+
+    private function xmlResponse($data, int $status, $errors = null)
+    {
+        return new Response($data, 200, ['Content-Type' => 'text/xml']);
     }
 }

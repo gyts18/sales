@@ -11,16 +11,16 @@ use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 
 class AppFixtures extends Fixture
 {
-	private $passwordEncoder;
+    private $passwordEncoder;
 
-     public function __construct(UserPasswordEncoderInterface $passwordEncoder)
-     {
-         $this->passwordEncoder = $passwordEncoder;
-     }
+    public function __construct(UserPasswordEncoderInterface $passwordEncoder)
+    {
+        $this->passwordEncoder = $passwordEncoder;
+    }
 
     public function load(ObjectManager $manager)
     {
-    	//USER FIXTURE
+        //USER FIXTURE
         $user = new User();
         $user->setEmail('worker@job.com');
         $user->setRoles(['ROLE_USER']);
@@ -28,32 +28,32 @@ class AppFixtures extends Fixture
         $manager->persist($user);
 
         //FIXTURE FOR COFFEE LOGIC
-		$milk = new Milk();
-		$milk->setName('Standard milk');
-		$manager->persist($milk);
-		$milk = new Milk();
-		$milk->setName('Soy milk');
-		$manager->persist($milk);
-		$milk = new Milk();
-		$milk->setName('Rice Milk');
-		$manager->persist($milk);
-		$milk = new Milk();
-		$milk->setName('Other');
-		$manager->persist($milk);
-		//MORE
-		$cupSize = new CupSize();
-		$cupSize->setSize('S');
-		$manager->persist($cupSize);
-		$cupSize = new CupSize();
-		$cupSize->setSize('M');
-		$manager->persist($cupSize);
-		$cupSize = new CupSize();
-		$cupSize->setSize('L');
-		$manager->persist($cupSize);
-		$cupSize = new CupSize();
-		$cupSize->setSize('XL');
-		$manager->persist($cupSize);
+        $milk = new Milk();
+        $milk->setName('Standard milk');
+        $manager->persist($milk);
+        $milk = new Milk();
+        $milk->setName('Soy milk');
+        $manager->persist($milk);
+        $milk = new Milk();
+        $milk->setName('Rice Milk');
+        $manager->persist($milk);
+        $milk = new Milk();
+        $milk->setName('Other');
+        $manager->persist($milk);
+        //MORE
+        $cupSize = new CupSize();
+        $cupSize->setSize('S');
+        $manager->persist($cupSize);
+        $cupSize = new CupSize();
+        $cupSize->setSize('M');
+        $manager->persist($cupSize);
+        $cupSize = new CupSize();
+        $cupSize->setSize('L');
+        $manager->persist($cupSize);
+        $cupSize = new CupSize();
+        $cupSize->setSize('XL');
+        $manager->persist($cupSize);
 
-		$manager->flush();
-	}
+        $manager->flush();
+    }
 }
