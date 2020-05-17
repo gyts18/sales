@@ -4,15 +4,15 @@
 namespace App\Service;
 
 
-use App\Entity\Order;
+use App\Entity\Products\Flowers;
 use App\Service\Traits\RepositoryResultsTrait;
 
-class OrderService extends BaseService
+class FlowerService extends BaseService
 {
-	use RepositoryResultsTrait;
+    use RepositoryResultsTrait;
 
     public function getEntityClass(): string
     {
-       return Order::class;
+        return Flowers::class;
     }
 }

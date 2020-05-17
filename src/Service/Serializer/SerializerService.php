@@ -53,22 +53,23 @@ class SerializerService
             ]
         );
     }
-   public function normalizeWithRelationsToXml($entity, array $excludeProperties = [])
-   {
-       $serializer = new Serializer($this->normalizers, $this->xmlEncoder);
 
-       $defaultExclusions = ['__initializer__', 'createdAt', 'updatedAt', '__cloner__', '__isInitialized__'];
-       $exclusions = array_merge($defaultExclusions, $excludeProperties);
+    public function normalizeWithRelationsToXml($entity, array $excludeProperties = [])
+    {
+        $serializer = new Serializer($this->normalizers, $this->xmlEncoder);
 
-       return $serializer->normalize(
-           $entity,
-           null,
-           [
-               'ignored_attributes' => $exclusions,
-               'circular_reference_handler' => function ($object) {
-                   return $object->getId();
-               },
-           ]
-       );
-   }
+        $defaultExclusions = ['__initializer__', 'createdAt', 'updatedAt', '__cloner__', '__isInitialized__'];
+        $exclusions = array_merge($defaultExclusions, $excludeProperties);
+
+        return $serializer->normalize(
+            $entity,
+            null,
+            [
+                'ignored_attributes' => $exclusions,
+                'circular_reference_handler' => function ($object) {
+                    return $object->getId();
+                },
+            ]
+        );
+    }
 }

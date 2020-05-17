@@ -17,13 +17,6 @@ use Symfony\Component\Routing\Annotation\Route;
  */
 class IndexController extends AbstractController
 {
-	private Order $order;
-
-	public function __construct(Order $order)
-	{
-		$this->order = $order;
-	}
-
 	/**
      * @Route("/", name="home")
      */

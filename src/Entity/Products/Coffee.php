@@ -3,6 +3,7 @@
 namespace App\Entity\Products;
 
 use App\Entity\Interfaces\OrderStrategyInterface;
+use App\Entity\Order;
 use App\Entity\Products\ProductComponents\CupSize;
 use App\Entity\Products\ProductComponents\Milk;
 use App\Repository\CoffeeRepository;
@@ -13,7 +14,7 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class Coffee implements OrderStrategyInterface
 {
-	private const KEY = "coffee";
+    private const KEY = "coffee";
 
     /**
      * @ORM\Id()
@@ -25,7 +26,7 @@ class Coffee implements OrderStrategyInterface
     /**
      * @ORM\Column(type="boolean")
      */
-    private bool $milk;
+    private bool $milk = false;
 
     /**
      * @ORM\ManyToOne(targetEntity=Milk::class)
@@ -33,7 +34,7 @@ class Coffee implements OrderStrategyInterface
     private ?Milk $milkType = null;
 
     /**
-     * @ORM\Column(type="array")
+     * @ORM\Column(type="simple_array")
      */
     private $location = [];
 
@@ -42,6 +43,11 @@ class Coffee implements OrderStrategyInterface
      * @ORM\JoinColumn(nullable=false)
      */
     private $cupSize;
+
+    /**
+     * @ORM\OneToOne(targetEntity=Order::class, cascade={"persist", "remove"})
+     */
+    private $orderEntity;
 
     public function getId(): ?int
     {
@@ -65,7 +71,7 @@ class Coffee implements OrderStrategyInterface
         return $this->milkType;
     }
 
-    public function setMilkType(Milk $milkType): self
+    public function setMilkType(?Milk $milkType): self
     {
         $this->milkType = $milkType;
 
@@ -84,15 +90,15 @@ class Coffee implements OrderStrategyInterface
         return $this;
     }
 
-	public function isOrderable(string $orderType): bool
-            	{
-            		return $orderType === SELF::KEY;
-            	}
+    public function isOrderable(string $orderType): bool
+    {
+        return $orderType === SELF::KEY;
+    }
 
-	public function sendOrder(): void
-            	{
-            		// TODO: Implement sendOrder() method.
-            	}
+    public function sendOrder($orderObject, $sendType): void
+    {
+
+    }
 
     public function getCupSize(): ?CupSize
     {
@@ -102,6 +108,18 @@ class Coffee implements OrderStrategyInterface
     public function setCupSize(?CupSize $cupSize): self
     {
         $this->cupSize = $cupSize;
+
+        return $this;
+    }
+
+    public function getOrderEntity(): ?Order
+    {
+        return $this->orderEntity;
+    }
+
+    public function setOrderEntity(?Order $orderEntity): self
+    {
+        $this->orderEntity = $orderEntity;
 
         return $this;
     }
