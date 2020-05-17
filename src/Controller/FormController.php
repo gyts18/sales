@@ -8,6 +8,7 @@ use App\Form\CoffeeFormType;
 use App\Form\FlowerFormType;
 use App\Service\CoffeeService;
 use App\Service\FlowerService;
+use Exception;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -98,6 +99,7 @@ class FormController extends AbstractController
      * the order strategy creates json or xml response which gets returned.
      * if any validation failures, you get redirected to the main page with the error message.
      *
+     * @throws Exception
      */
     public function parseCoffeeForm(Request $request, CoffeeService $coffeeService)
     {
@@ -158,6 +160,7 @@ class FormController extends AbstractController
      * -> call service to create the entity -> inside the service the entity gets created ->
      * the order strategy creates json or xml response which gets returned.
      * if any validation failures, you get redirected to the main page with the error message.
+     * @throws Exception
      */
     public function parseFlowerForm(Request $request, FlowerService $flowerService)
     {
