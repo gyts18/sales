@@ -9,6 +9,7 @@ use App\Entity\Products\ProductComponents\Milk;
 use App\Repository\CoffeeRepository;
 use App\Service\Serializer\SerializerService;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Serializer\Exception\ExceptionInterface;
 
 /**
  * @ORM\Entity(repositoryClass=CoffeeRepository::class)
@@ -91,11 +92,29 @@ class Coffee implements OrderStrategyInterface
         return $this;
     }
 
+    /**
+     * @param string $orderType
+     *
+     * @return bool
+     *
+     * STRATEGY PATTERN, check if entity is orderable
+     */
     public function isOrderable(string $orderType): bool
     {
         return $orderType === SELF::KEY;
     }
 
+    /**
+     * @param object            $coffee
+     * @param string            $sendType
+     * @param SerializerService $serializerService
+     *
+     * @return array|bool|float|int|mixed|string
+     * @throws ExceptionInterface
+     *
+     * STRATEGY PATTERN, after is isOrderable() is true, handle the sending logic
+     * on which format to send (json or xml) and to serialize accordingly.
+     */
     public function sendOrder(object $coffee, string $sendType, SerializerService $serializerService)
     {
         if ($sendType == 'JSON') {

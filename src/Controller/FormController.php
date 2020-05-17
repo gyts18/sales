@@ -11,6 +11,7 @@ use App\Service\FlowerService;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
 /**
@@ -29,6 +30,14 @@ class FormController extends AbstractController
     private const SEND_XML = 'XML';
     private Order $order;
 
+    /**
+     * FormController constructor.
+     *
+     * @param Order $order
+     *
+     * STRATEGY PATTERN
+     * Initialize the order, so the strategies are stored inside.
+     */
     public function __construct(Order $order)
     {
         $this->order = $order;
@@ -36,6 +45,10 @@ class FormController extends AbstractController
 
     /**
      * @Route("/coffee", name="coffee_form", methods={"GET"})
+     *
+     * Basically I render the form into HTML and return it via json, so later
+     * in the frontend it gets rendered, so it feels that the application is more
+     * reactive with minimal effort.
      */
     public function renderCoffeeForm()
     {
@@ -53,6 +66,10 @@ class FormController extends AbstractController
     /**
      *
      * @Route("/flowers", name="flower_form", methods={"GET"})
+     *
+     * Basically I render the form into HTML and return it via json, so later
+     * in the frontend it gets rendered, so it feels that the application is more
+     * reactive with minimal effort.
      */
     public function renderFlowerForm()
     {
@@ -69,8 +86,18 @@ class FormController extends AbstractController
 
     /**
      * @Route("/coffee/new", name="parse_coffee_form", methods={"POST"})
+     *
      * @param Request       $request
      * @param CoffeeService $coffeeService
+     *
+     * @return JsonResponse|Response
+     *
+     * Logic:
+     * handle the form request -> check if valid -> check which button is clicked (json or xml)
+     * -> call service to create the entity -> inside the service the entity gets created ->
+     * the order strategy creates json or xml response which gets returned.
+     * if any validation failures, you get redirected to the main page with the error message.
+     *
      */
     public function parseCoffeeForm(Request $request, CoffeeService $coffeeService)
     {
@@ -111,7 +138,7 @@ class FormController extends AbstractController
             }
         }
 
-        return $this->render(
+        return $this->redirectToRoute(
             'index/index.html.twig',
             [
                 'error' => 'the form was not valid, please enter the data correctly',
@@ -123,6 +150,14 @@ class FormController extends AbstractController
      * @Route("/flowers/new", name="parse_flower_form", methods={"POST"})
      * @param Request       $request
      * @param FlowerService $flowerService
+     *
+     * @return JsonResponse|Response
+     *
+     * Logic:
+     * handle the form request -> check if valid -> check which button is clicked (json or xml)
+     * -> call service to create the entity -> inside the service the entity gets created ->
+     * the order strategy creates json or xml response which gets returned.
+     * if any validation failures, you get redirected to the main page with the error message.
      */
     public function parseFlowerForm(Request $request, FlowerService $flowerService)
     {

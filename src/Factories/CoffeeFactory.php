@@ -9,6 +9,14 @@ use App\Entity\Products\Coffee;
 
 class CoffeeFactory
 {
+    /**
+     * @param Order  $order
+     * @param Coffee $coffee
+     *
+     * @return Coffee
+     *
+     * Create entity
+     */
     public function create(Order $order, Coffee $coffee): Coffee
     {
         if (!$coffee->getMilk()) {

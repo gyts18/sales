@@ -14,6 +14,12 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class CoffeeFormType extends AbstractType
 {
+    /**
+     * @param FormBuilderInterface $builder
+     * @param array                $options
+     *
+     * Form for building Coffee entity, with form validation in the frontend.
+     */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder

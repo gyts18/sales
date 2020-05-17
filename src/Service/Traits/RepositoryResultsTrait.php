@@ -6,6 +6,9 @@ use Doctrine\ORM\QueryBuilder;
 
 /**
  * Trait RepositoryResultsTrait
+ *
+ * used for Services, so that you can call any repository functions
+ * without the need to call repository classes.
  */
 trait RepositoryResultsTrait
 {

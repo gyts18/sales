@@ -12,6 +12,7 @@ use App\Factories\FlowerFactory;
 use App\Service\Serializer\SerializerService;
 use App\Service\Traits\RepositoryResultsTrait;
 use Doctrine\ORM\EntityManagerInterface;
+use Exception;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 
 class FlowerService extends BaseService
@@ -32,6 +33,17 @@ class FlowerService extends BaseService
         $this->serializerService = $serializerService;
     }
 
+    /**
+     * @param Order   $order
+     * @param Flowers $flowers
+     * @param string  $type
+     * @param string  $sendType
+     *
+     * @return mixed
+     * @throws Exception
+     *
+     *  Called from controller to create an entity, and later to handle the order.
+     */
     public function createFlowersAndDispatchOrder(Order $order, Flowers $flowers, string $type, string $sendType)
     {
         $flowers = $this->flowerFactory->create($order, $flowers);

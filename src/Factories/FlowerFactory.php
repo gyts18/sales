@@ -9,6 +9,13 @@ use App\Entity\Products\Flowers;
 
 class FlowerFactory
 {
+    /**
+     * @param Order   $order
+     * @param Flowers $flowers
+     *
+     * @return Flowers
+     * Create entity
+     */
     public function create(Order $order, Flowers $flowers): Flowers
     {
         $order->setProductName('Flowers');
