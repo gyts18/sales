@@ -4,14 +4,11 @@ namespace App\Form;
 
 use App\Entity\Products\Coffee;
 use App\Entity\Products\ProductComponents\Milk;
-use phpDocumentor\Reflection\Types\Collection;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
-use Symfony\Component\Form\Extension\Core\Type\CollectionType;
-use Symfony\Component\Form\Extension\Core\Type\IntegerType;
+use Symfony\Component\Form\Extension\Core\Type\NumberType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
-use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
@@ -39,15 +36,15 @@ class CoffeeFormType extends AbstractType
             )
             ->add('cupSize')
             ->add(
-                'Longitude',
-                TextType::class,
+                'longitude',
+                NumberType::class,
                 [
                     'property_path' => 'location[0]',
                 ]
             )
             ->add(
-                'Latitude',
-                TextType::class,
+                'latitude',
+                NumberType::class,
                 [
                     'property_path' => 'location[1]',
                 ]

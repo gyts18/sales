@@ -2,7 +2,7 @@
 
 namespace App\Controller;
 
-use App\Controller\Traits\RestControllerTrait;
+use App\Controller\Traits\ControllerTrait;
 use App\Entity\Order;
 use App\Form\CoffeeFormType;
 use App\Form\FlowerFormType;
@@ -21,10 +21,12 @@ use Symfony\Component\Routing\Annotation\Route;
  */
 class FormController extends AbstractController
 {
-    use RestControllerTrait;
+    use ControllerTrait;
 
     private const COFFEE_KEY = 'coffee';
     private const FLOWER_KEY = 'flowers';
+    private const SEND_JSON = 'JSON';
+    private const SEND_XML = 'XML';
     private Order $order;
 
     public function __construct(Order $order)
@@ -78,10 +80,43 @@ class FormController extends AbstractController
         /**
          * TODO: for future reference, because it's a custom form, isValid() doesn't validate correctly... Because the
          * form doesn't get mapped into a fully fledged entity.
+         *
+         * UPDATE: by a miracle it started working... oh well
          */
-        if ($form->isSubmitted()) {
-            $result = $coffeeService->createCoffeeAndDispatchOrder($this->order, $form->getData(), self::COFFEE_KEY);
+        if ($form->isSubmitted() && $form->isValid()) {
+            if ($form->getClickedButton() && 'sendJSON' === $form->getClickedButton()->getName()) {
+                $result = $coffeeService->createCoffeeAndDispatchOrder(
+                    $this->order,
+                    $form->getData(),
+                    self::COFFEE_KEY,
+                    self::SEND_JSON
+                );
+
+                return $this->jsonResponse($result, JsonResponse::HTTP_OK);
+            } elseif ($form->getClickedButton() && 'sendXML' === $form->getClickedButton()->getName()) {
+                $result = $coffeeService->createCoffeeAndDispatchOrder(
+                    $this->order,
+                    $form->getData(),
+                    self::COFFEE_KEY,
+                    self::SEND_XML
+                );
+
+                return $this->xmlResponse($result, 200);
+            } else {
+                return $this->jsonResponse(
+                    null,
+                    JsonResponse::HTTP_INTERNAL_SERVER_ERROR,
+                    ['error' => 'Unexpected error happened, probably you tried to break something']
+                );
+            }
         }
+
+        return $this->render(
+            'index/index.html.twig',
+            [
+                'error' => 'the form was not valid, please enter the data correctly',
+            ]
+        );
     }
 
     /**
@@ -97,9 +132,42 @@ class FormController extends AbstractController
         /**
          * TODO: for future reference, because it's a custom form, isValid() doesn't validate correctly... Because the
          * form doesn't get mapped into a fully fledged entity...
+         *
+         * UPDATE: by a miracle it started working... oh well
          */
-        if ($form->isSubmitted()) {
+        if ($form->isSubmitted() && $form->isValid()) {
+            if ($form->getClickedButton() && 'sendJSON' === $form->getClickedButton()->getName()) {
+                $result = $flowerService->createFlowersAndDispatchOrder(
+                    $this->order,
+                    $form->getData(),
+                    self::FLOWER_KEY,
+                    self::SEND_JSON
+                );
 
+                return $this->jsonResponse($result, JsonResponse::HTTP_OK);
+            } elseif ($form->getClickedButton() && 'sendXML' === $form->getClickedButton()->getName()) {
+                $result = $flowerService->createFlowersAndDispatchOrder(
+                    $this->order,
+                    $form->getData(),
+                    self::FLOWER_KEY,
+                    self::SEND_XML
+                );
+
+                return $this->xmlResponse($result, 200);
+            } else {
+                return $this->jsonResponse(
+                    null,
+                    JsonResponse::HTTP_INTERNAL_SERVER_ERROR,
+                    ['error' => 'Unexpected error happened, probably you tried to break something']
+                );
+            }
         }
+
+        return $this->render(
+            'index/index.html.twig',
+            [
+                'error' => 'the form was not valid, please enter the data correctly',
+            ]
+        );
     }
 }

@@ -3,6 +3,27 @@
 {% block title %}Super CMS!{% endblock %}
 
 {% block body %}
+    {% if error is defined %}
+        <div class="modal" tabindex="-1" role="dialog">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title">Modal title</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <p>{{ error }}</p>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    {% endif %}
     <div class="container-fluid w-50">
         <div class="d-flex justify-content-center shadow pt-3" id="header">
             <button class="btn btn-primary mr-3 mb-3" id="backButton" hidden>Go Back</button>
@@ -15,10 +36,22 @@
             <div class="h4 text-center">Choose what do you want to order</div>
             <div class="row justify-content-center text-center pt-4">
                 <div class="col-sm-6">
-                    <button type="button" id="flowers" data-url="{{ url('flower_form')}}" class="form-url-flowers btn btn-lg btn-primary">Flowers</button>
+                    <button type="button" id="flowers" data-url="{{ url('flower_form') }}"
+                            class="form-url-flowers btn btn-lg btn-primary">Flowers
+                    </button>
                 </div>
                 <div class="col-sm-6">
-                    <button type="button" id="coffee" data-url="{{ url('coffee_form')}}" class="form-url-coffee btn btn-lg btn-primary">Coffee</button>
+                    <button type="button" id="coffee" data-url="{{ url('coffee_form') }}"
+                            class="form-url-coffee btn btn-lg btn-primary">Coffee
+                    </button>
+                </div>
+            </div>
+            <div class="h4 text-center pt-4">Other options</div>
+            <div class="row justify-content-center text-center pt-4">
+                <div class="col-sm-12">
+                    <button type="button" id="orders" data-url="{{ url('orders') }}"
+                            class="form-url-flowers btn btn-lg btn-primary">Order status
+                    </button>
                 </div>
             </div>
         </div>

@@ -6,14 +6,12 @@ namespace App\Factories;
 
 use App\Entity\Order;
 use App\Entity\Products\Coffee;
-use Symfony\Component\Form\FormFactoryInterface;
 
 class CoffeeFactory
 {
-    public function create(Order $order, Coffee $coffee) :Coffee
+    public function create(Order $order, Coffee $coffee): Coffee
     {
-        if(!$coffee->getMilk())
-        {
+        if (!$coffee->getMilk()) {
             $coffee->setMilkType(null);
         }
         $order->setProductName('Coffee');

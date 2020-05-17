@@ -7,6 +7,7 @@ use App\Entity\Order;
 use App\Entity\Products\ProductComponents\CupSize;
 use App\Entity\Products\ProductComponents\Milk;
 use App\Repository\CoffeeRepository;
+use App\Service\Serializer\SerializerService;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -95,9 +96,20 @@ class Coffee implements OrderStrategyInterface
         return $orderType === SELF::KEY;
     }
 
-    public function sendOrder($orderObject, $sendType): void
+    public function sendOrder(object $coffee, string $sendType, SerializerService $serializerService)
     {
+        if ($sendType == 'JSON') {
 
+            $sendableData = $this->handleData($coffee);
+
+            return $serializerService->serializeWithRelationsToJson($sendableData);
+        } elseif ($sendType == 'XML') {
+            $sendableData = $this->handleData($coffee);
+
+            return $serializerService->serializeWithRelationsToXml($sendableData);
+        } else {
+            return false;
+        }
     }
 
     public function getCupSize(): ?CupSize
@@ -122,5 +134,18 @@ class Coffee implements OrderStrategyInterface
         $this->orderEntity = $orderEntity;
 
         return $this;
+    }
+
+    private function handleData(Coffee $coffee)
+    {
+        return [
+            'orderId' => $coffee->getOrderEntity()->getId(),
+            'delivery_place' => [
+                'latitude' => $coffee->getLocation()[0],
+                'longitude' => $coffee->getLocation()[1],
+            ],
+            'name' => $coffee->getOrderEntity()->getProductName(),
+            'deliver_at' => $coffee->getOrderEntity()->getDeliverAt()->format('Y-m-d H:m:s'),
+        ];
     }
 }

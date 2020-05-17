@@ -43,11 +43,11 @@ class Order
         $this->strategies[] = $orderStrategy;
     }
 
-    public function handleOrder($orderObject, $type)
+    public function handleOrder($orderObject, $type, $sendType, $serializerService)
     {
         foreach ($this->strategies as $strategy) {
             if ($strategy->isOrderable($type)) {
-                return $strategy->sendOrder($orderObject);
+                return $strategy->sendOrder($orderObject, $sendType, $serializerService);
             }
         }
         throw new \InvalidArgumentException('This type of order is not orderable');
