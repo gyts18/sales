@@ -6,7 +6,7 @@ The **Flowers** and **Coffee** should be sent to the courier , but a.t.m just to
 **after** the form submission on success. response is shown on the same page.
 **What I could have done to make it more realistic:**
 
- - Create another symfony project, and pass the data via cURL or any other possible solution, leaving an open endpoint route, in which the second project would send a callback function to the main app so that the sale is complete.
+ - Create another symfony project, create an eventlistener with event and do a async request and pass the data via cURL or any other possible solution, leaving an open endpoint route, in which the second project would send a callback function to the main app so that the sale is complete.
  
  - WebSockets and making a real-time table updater in the same monoblock application
  - When ordering coffee, Google geolocation API could have worked fine with an autocomplete field in which the location gets written and the coordinates taken in. and then returned for the courier.
