@@ -22,6 +22,7 @@ In that case I would have used Models, with assertions and done a custom form va
 **Strategy pattern:**
 
  - Altought implemented and used it's really hard to say if it's done correctly, but atleast it works and does it's job.
+ - The problem is more defined in the app docs itself.
 
 **Other notes**
 
@@ -39,7 +40,7 @@ In that case I would have used Models, with assertions and done a custom form va
 # Installation
 **What's used**:
 
- - Docker
+- Docker
 - jQuery
 - Twig
 - Symfony 5
