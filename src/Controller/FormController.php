@@ -140,7 +140,7 @@ class FormController extends AbstractController
             }
         }
 
-        return $this->redirectToRoute(
+        return $this->render(
             'index/index.html.twig',
             [
                 'error' => 'the form was not valid, please enter the data correctly',
